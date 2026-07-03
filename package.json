@@ -1,0 +1,24 @@
+{
+  "name": "hustle-link",
+  "version": "0.1.0",
+  "description": "Turn WhatsApp orders into Lightning payments for Caribbean hustlers",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "hustle": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "dev": "tsx src/cli.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0"
+  }
+}
