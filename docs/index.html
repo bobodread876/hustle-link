@@ -3,291 +3,426 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hustle Link — WhatsApp orders in. Lightning payments out.</title>
-<meta name="description" content="Turn WhatsApp orders into Lightning payments for Caribbean hustlers. No app to learn. No custody. Sats straight to your Flash wallet.">
-<meta property="og:title" content="Hustle Link">
-<meta property="og:description" content="WhatsApp orders in. Lightning payments out. Built for Caribbean hustlers.">
+<title>Hustle Link — Tek orders pon WhatsApp. Get paid in sats.</title>
+<meta name="description" content="Turn WhatsApp orders into Lightning payments for Caribbean hustlers. No app to learn. No middleman. Sats straight to your Flash wallet.">
+<meta property="og:title" content="Hustle Link — Orders in. Sats out.">
+<meta property="og:description" content="Turn WhatsApp orders into Lightning payments for Caribbean hustlers.">
 <meta property="og:url" content="https://bobodread876.github.io/hustle-link/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0c1210;
-    --bg-card: #131c18;
-    --bg-chat: #0a0f0d;
-    --ink: #e8f0ec;
-    --ink-dim: #93a69d;
-    --gold: #f7c948;
-    --gold-deep: #e3a008;
-    --green: #25d366;
-    --teal: #17b897;
-    --line: #223129;
-    --radius: 14px;
+    --paper: #f7efdd;
+    --paper-deep: #efe3c8;
+    --ink: #1b1509;
+    --grn: #007940;
+    --grn-deep: #045c32;
+    --gold: #ffbe0b;
+    --red: #d94f1e;
+    --wa-header: #075e54;
+    --wa-wall: #e9e0d3;
+    --wa-out: #d9fdd3;
+    --shadow: 5px 5px 0 var(--ink);
+    --border: 2.5px solid var(--ink);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--bg);
+    background: var(--paper);
+    /* subtle sun-bleached paper grain */
+    background-image:
+      radial-gradient(rgba(27,21,9,.035) 1px, transparent 1.5px);
+    background-size: 22px 22px;
     color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
-  a { color: var(--teal); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  .display { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; }
+  .hand { font-family: 'Caveat', cursive; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
+  a { color: var(--grn-deep); }
+  img { max-width: 100%; }
 
-  /* ambient glow */
-  .glow {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background:
-      radial-gradient(600px 400px at 80% -10%, rgba(247,201,72,.10), transparent 60%),
-      radial-gradient(700px 500px at 10% 110%, rgba(23,184,151,.08), transparent 60%);
+  /* ── header ── */
+  header { border-bottom: var(--border); background: var(--paper); }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+  .brand .mark {
+    background: var(--gold); border: var(--border); box-shadow: 3px 3px 0 var(--ink);
+    width: 38px; height: 38px; display: grid; place-items: center; font-size: 20px;
+    transform: rotate(-4deg);
   }
-  main, header, footer { position: relative; z-index: 1; }
+  .brand .name { font-family: 'Archivo Black', sans-serif; font-size: 1.05rem; letter-spacing: .01em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 20px; font-weight: 700; font-size: .92rem; }
+  .nav-links a { color: var(--ink); text-decoration: none; }
+  .nav-links a:hover { color: var(--red); }
 
-  header { padding: 28px 0; }
-  .nav { display: flex; align-items: center; justify-content: space-between; }
-  .brand { font-weight: 800; font-size: 1.15rem; letter-spacing: -.02em; color: var(--ink); }
-  .brand .bolt { color: var(--gold); }
-  .nav-links { display: flex; gap: 22px; font-size: .95rem; }
-  .nav-links a { color: var(--ink-dim); }
-  .nav-links a:hover { color: var(--ink); text-decoration: none; }
-
-  /* hero */
-  .hero { padding: 72px 0 40px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
-  .hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    line-height: 1.08; letter-spacing: -.03em; font-weight: 800;
+  /* ── hero ── */
+  .hero { padding: 64px 0 30px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 46px; align-items: center; }
+  .stamp-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tag {
+    display: inline-block; border: var(--border); background: #fff;
+    font-weight: 800; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+    padding: 4px 10px; box-shadow: 3px 3px 0 var(--ink);
   }
-  .hero h1 .in { color: var(--green); }
-  .hero h1 .out { color: var(--gold); }
-  .hero p.lede { margin: 22px 0 30px; font-size: 1.15rem; color: var(--ink-dim); max-width: 34em; }
-  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .tag.grn { background: var(--grn); color: #fff; transform: rotate(-2deg); }
+  .tag.gold { background: var(--gold); transform: rotate(1.5deg); }
+  h1 {
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    font-size: clamp(2.6rem, 6.4vw, 4.6rem); line-height: .98; letter-spacing: -.01em;
+  }
+  h1 .sats { color: var(--grn); position: relative; white-space: nowrap; }
+  h1 .sats svg { position: absolute; left: 0; bottom: -14px; width: 100%; height: 16px; }
+  .lede { margin: 26px 0 30px; font-size: 1.12rem; max-width: 32em; }
+  .lede b { background: linear-gradient(transparent 55%, var(--gold) 55%); }
+  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
   .btn {
-    display: inline-block; padding: 13px 26px; border-radius: 10px;
-    font-weight: 700; font-size: 1rem; transition: transform .12s ease, box-shadow .12s ease;
+    display: inline-block; padding: 14px 26px; border: var(--border);
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase; font-size: .95rem;
+    text-decoration: none; box-shadow: var(--shadow);
+    transition: transform .08s ease, box-shadow .08s ease;
   }
-  .btn:hover { text-decoration: none; transform: translateY(-1px); }
-  .btn-gold { background: linear-gradient(180deg, var(--gold), var(--gold-deep)); color: #1a1503; box-shadow: 0 4px 24px rgba(247,201,72,.25); }
-  .btn-ghost { border: 1px solid var(--line); color: var(--ink); background: var(--bg-card); }
-  .sub-cta { margin-top: 16px; font-size: .9rem; color: var(--ink-dim); }
+  .btn:active, .btn:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+  .btn-grn { background: var(--grn); color: #fff; }
+  .btn-paper { background: #fff; color: var(--ink); }
+  .hand-note {
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.35rem;
+    color: var(--red); transform: rotate(-2deg); display: inline-block; margin-top: 14px;
+  }
 
-  /* phone mockup */
+  /* ── whatsapp phone ── */
   .phone {
-    background: var(--bg-chat); border: 1px solid var(--line); border-radius: 26px;
-    padding: 18px 14px; max-width: 360px; margin-left: auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    border: var(--border); box-shadow: 8px 8px 0 var(--ink);
+    border-radius: 22px; overflow: hidden; max-width: 350px; margin-left: auto;
+    background: var(--wa-wall); transform: rotate(1.2deg);
   }
-  .phone-top { display: flex; align-items: center; gap: 10px; padding: 4px 8px 14px; border-bottom: 1px solid var(--line); }
-  .avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), var(--green)); display: grid; place-items: center; font-size: 17px; }
-  .phone-top .name { font-weight: 700; font-size: .92rem; }
-  .phone-top .status { font-size: .74rem; color: var(--green); }
-  .chat { padding: 14px 4px 4px; display: flex; flex-direction: column; gap: 10px; }
-  .msg { max-width: 86%; padding: 9px 13px; border-radius: 12px; font-size: .84rem; line-height: 1.45; }
-  .msg.them { background: #1d2a24; align-self: flex-start; border-bottom-left-radius: 4px; }
-  .msg.us { background: #0f3d2e; align-self: flex-end; border-bottom-right-radius: 4px; }
-  .msg .meta { display: block; margin-top: 4px; font-size: .68rem; color: var(--ink-dim); text-align: right; }
-  .msg .inv {
-    display: block; margin-top: 8px; padding: 8px 10px; border-radius: 8px;
-    background: #0a1f16; border: 1px dashed rgba(247,201,72,.4);
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: .68rem; color: var(--gold); word-break: break-all;
+  .wa-top { background: var(--wa-header); color: #fff; display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+  .wa-top .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--gold); color: var(--ink); display: grid; place-items: center; font-size: 18px; border: 2px solid #fff; }
+  .wa-top .name { font-weight: 700; font-size: .95rem; line-height: 1.2; }
+  .wa-top .sub { font-size: .72rem; opacity: .85; }
+  .chat { padding: 16px 12px 18px; display: flex; flex-direction: column; gap: 9px;
+    background-image: radial-gradient(rgba(27,21,9,.05) 1px, transparent 1.5px); background-size: 16px 16px; }
+  .msg { max-width: 88%; padding: 8px 11px; border-radius: 9px; font-size: .85rem; line-height: 1.4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.12); position: relative; }
+  .msg.in { background: #fff; align-self: flex-start; border-top-left-radius: 2px; }
+  .msg.out { background: var(--wa-out); align-self: flex-end; border-top-right-radius: 2px; }
+  .msg .time { font-size: .64rem; color: #7b8078; float: right; margin: 8px 0 0 8px; }
+  .msg .check { color: #34b7f1; }
+  .msg .pay-card {
+    margin-top: 7px; background: #fff; border-radius: 7px; padding: 8px 10px;
+    border-left: 4px solid var(--grn);
   }
-  .msg .paid { color: var(--gold); font-weight: 700; }
-
-  /* sections */
-  section { padding: 64px 0; }
-  .kicker { color: var(--gold); font-weight: 700; font-size: .82rem; text-transform: uppercase; letter-spacing: .12em; }
-  h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); letter-spacing: -.02em; margin: 10px 0 14px; }
-  .section-lede { color: var(--ink-dim); max-width: 44em; }
-
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
-  .step { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 22px; }
-  .step .num { font-family: ui-monospace, Menlo, monospace; color: var(--gold); font-weight: 700; font-size: .85rem; }
-  .step h3 { margin: 10px 0 8px; font-size: 1.08rem; }
-  .step p { color: var(--ink-dim); font-size: .93rem; }
-
-  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 36px; }
-  .feature { display: flex; gap: 16px; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
-  .feature .icon { font-size: 1.5rem; line-height: 1.2; }
-  .feature h3 { font-size: 1.02rem; margin-bottom: 6px; }
-  .feature p { color: var(--ink-dim); font-size: .92rem; }
-
-  .demo {
-    background: var(--bg-chat); border: 1px solid var(--line); border-radius: var(--radius);
-    margin-top: 36px; overflow: hidden;
+  .msg .pay-card .amt { font-weight: 800; font-size: 1rem; }
+  .msg .pay-card .lnaddr { font-family: ui-monospace, Menlo, monospace; font-size: .66rem; color: #667; word-break: break-all; }
+  .msg .pay-card .paybtn {
+    display: block; text-align: center; margin-top: 8px; background: var(--grn); color: #fff;
+    border-radius: 6px; padding: 6px; font-weight: 700; font-size: .8rem;
   }
-  .demo-bar { display: flex; gap: 7px; padding: 13px 16px; border-bottom: 1px solid var(--line); }
-  .demo-bar span { width: 11px; height: 11px; border-radius: 50%; background: #2a3a32; }
-  .demo pre {
-    padding: 22px; overflow-x: auto;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: .82rem; line-height: 1.65; color: var(--ink);
+  .msg.paid-note { background: #fff8dc; align-self: center; font-size: .74rem; padding: 5px 12px; border-radius: 7px; color: #6b5900; font-weight: 700; }
+
+  /* ── marquee ── */
+  .marquee {
+    border-top: var(--border); border-bottom: var(--border);
+    background: var(--ink); color: var(--gold); overflow: hidden; margin-top: 56px;
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase; font-size: .95rem;
   }
-  .demo .c { color: var(--ink-dim); }
-  .demo .g { color: var(--gold); }
-  .demo .t { color: var(--teal); }
+  .marquee-track { display: inline-flex; white-space: nowrap; padding: 12px 0; animation: roll 28s linear infinite; }
+  .marquee span { padding: 0 18px; }
+  @keyframes roll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
 
-  .banner {
-    margin-top: 72px; text-align: center; background: var(--bg-card);
-    border: 1px solid var(--line); border-radius: var(--radius); padding: 56px 30px;
+  /* ── sections ── */
+  section { padding: 72px 0 10px; }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  h2 { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+  .sec-hand { font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--red); font-weight: 700; }
+  .sec-lede { max-width: 42em; font-size: 1.02rem; }
+
+  /* order tickets (how it works) */
+  .tickets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 34px; }
+  .ticket {
+    background: #fff; border: var(--border); box-shadow: var(--shadow); padding: 24px 20px 22px;
+    position: relative;
   }
-  .banner h2 { margin-bottom: 12px; }
-  .banner p { color: var(--ink-dim); margin-bottom: 26px; }
+  .ticket:nth-child(1) { transform: rotate(-.8deg); }
+  .ticket:nth-child(2) { transform: rotate(.6deg); }
+  .ticket:nth-child(3) { transform: rotate(-.5deg); }
+  .ticket .num {
+    position: absolute; top: -18px; left: 16px;
+    background: var(--red); color: #fff; border: var(--border);
+    font-family: 'Archivo Black', sans-serif; font-size: 1rem;
+    width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%;
+  }
+  .ticket h3 { font-size: 1.06rem; margin: 8px 0 8px; font-weight: 800; }
+  .ticket p { font-size: .93rem; }
+  .ticket .quote {
+    font-family: 'Caveat', cursive; font-size: 1.25rem; font-weight: 600; color: var(--grn-deep);
+    border-bottom: 2px dashed var(--ink); padding-bottom: 8px; margin-bottom: 10px; display: block;
+  }
 
-  footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 34px 0 48px; color: var(--ink-dim); font-size: .9rem; }
-  .foot { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  /* receipt demo */
+  .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 34px; align-items: start; }
+  .receipt {
+    background: #fffef7; color: #222; max-width: 380px; margin: 0 auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; line-height: 1.6;
+    padding: 26px 22px 34px; position: relative;
+    box-shadow: 0 12px 28px rgba(27,21,9,.28);
+    /* torn receipt edges */
+    clip-path: polygon(0 8px, 3% 0, 6% 8px, 9% 0, 12% 8px, 15% 0, 18% 8px, 21% 0, 24% 8px, 27% 0, 30% 8px, 33% 0, 36% 8px, 39% 0, 42% 8px, 45% 0, 48% 8px, 51% 0, 54% 8px, 57% 0, 60% 8px, 63% 0, 66% 8px, 69% 0, 72% 8px, 75% 0, 78% 8px, 81% 0, 84% 8px, 87% 0, 90% 8px, 93% 0, 96% 8px, 100% 0, 100% calc(100% - 8px), 97% 100%, 94% calc(100% - 8px), 91% 100%, 88% calc(100% - 8px), 85% 100%, 82% calc(100% - 8px), 79% 100%, 76% calc(100% - 8px), 73% 100%, 70% calc(100% - 8px), 67% 100%, 64% calc(100% - 8px), 61% 100%, 58% calc(100% - 8px), 55% 100%, 52% calc(100% - 8px), 49% 100%, 46% calc(100% - 8px), 43% 100%, 40% calc(100% - 8px), 37% 100%, 34% calc(100% - 8px), 31% 100%, 28% calc(100% - 8px), 25% 100%, 22% calc(100% - 8px), 19% 100%, 16% calc(100% - 8px), 13% 100%, 10% calc(100% - 8px), 7% 100%, 4% calc(100% - 8px), 1% 100%, 0 calc(100% - 8px));
+    transform: rotate(-1deg);
+  }
+  .receipt .r-head { text-align: center; font-weight: 700; letter-spacing: .12em; }
+  .receipt .r-sub { text-align: center; font-size: .7rem; color: #666; }
+  .receipt hr { border: none; border-top: 1.5px dashed #999; margin: 10px 0; }
+  .receipt .row { display: flex; justify-content: space-between; gap: 12px; }
+  .receipt .big { font-weight: 800; font-size: .92rem; }
+  .receipt .ln { word-break: break-all; font-size: .62rem; color: #555; }
+  .receipt .qr-hint { text-align: center; font-size: .68rem; color: #777; margin-top: 6px; }
+  .stamp {
+    position: absolute; right: 14px; bottom: 44px; transform: rotate(-14deg);
+    border: 4px double var(--grn); color: var(--grn); border-radius: 8px;
+    font-family: 'Archivo Black', sans-serif; text-transform: uppercase;
+    padding: 6px 12px; font-size: 1rem; opacity: .85; background: rgba(255,255,255,.6);
+  }
+  .demo-copy h3 { font-weight: 800; font-size: 1.15rem; margin-bottom: 10px; }
+  .demo-copy p { margin-bottom: 14px; font-size: .98rem; }
+  .cmd {
+    background: var(--ink); color: var(--paper); font-family: ui-monospace, Menlo, monospace;
+    font-size: .8rem; padding: 14px 16px; border: var(--border); box-shadow: var(--shadow);
+    overflow-x: auto; white-space: pre; line-height: 1.7;
+  }
+  .cmd .g { color: var(--gold); }
 
-  @media (max-width: 820px) {
-    .hero { grid-template-columns: 1fr; padding-top: 40px; }
-    .phone { margin: 0 auto; }
-    .steps { grid-template-columns: 1fr; }
-    .features { grid-template-columns: 1fr; }
+  /* why list */
+  .why { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 44px; margin-top: 30px; }
+  .why-item { display: flex; gap: 14px; padding: 18px 0; border-bottom: 2px dashed rgba(27,21,9,.35); }
+  .why-item .tick {
+    flex: 0 0 auto; width: 30px; height: 30px; background: var(--gold); border: var(--border);
+    display: grid; place-items: center; font-weight: 900; transform: rotate(-3deg); margin-top: 3px;
+  }
+  .why-item h3 { font-size: 1rem; font-weight: 800; }
+  .why-item p { font-size: .92rem; }
+
+  /* big sign CTA */
+  .sign {
+    margin: 84px 0 0; background: var(--grn); color: #fff; border: var(--border);
+    box-shadow: 8px 8px 0 var(--ink); text-align: center; padding: 58px 26px 50px;
+    position: relative; overflow: hidden;
+  }
+  .sign::before, .sign::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 14px;
+    background: repeating-linear-gradient(45deg, var(--gold) 0 12px, var(--ink) 12px 24px);
+  }
+  .sign::before { left: 0; } .sign::after { right: 0; }
+  .sign h2 { color: #fff; font-size: clamp(1.8rem, 4.5vw, 3rem); margin-bottom: 6px; }
+  .sign .hand { font-size: 1.6rem; color: var(--gold); display: block; margin-bottom: 24px; }
+  .sign .btn-paper { color: var(--ink); }
+
+  footer { margin-top: 70px; border-top: var(--border); padding: 26px 0 42px; font-size: .9rem; }
+  .foot { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+  .foot a { color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-top: 42px; }
+    .phone { margin: 0 auto; transform: rotate(0); }
+    .tickets { grid-template-columns: 1fr; gap: 30px; }
+    .demo-grid { grid-template-columns: 1fr; }
+    .why { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
   }
 </style>
 </head>
 <body>
-<div class="glow"></div>
 
-<header class="wrap">
-  <nav class="nav">
-    <div class="brand"><span class="bolt">⚡</span> Hustle Link</div>
-    <div class="nav-links">
-      <a href="#how">How it works</a>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#">
+      <span class="mark">⚡</span>
+      <span class="name">Hustle Link</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#how">How it work</a>
+      <a href="#receipt">See it run</a>
       <a href="#why">Why</a>
-      <a href="#demo">Demo</a>
       <a href="https://github.com/bobodread876/hustle-link">GitHub</a>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </header>
 
-<main class="wrap">
-  <section class="hero">
+<main>
+  <div class="wrap hero">
     <div>
-      <h1>WhatsApp orders <span class="in">in</span>.<br>Lightning payments <span class="out">out</span>.</h1>
+      <div class="stamp-row">
+        <span class="tag grn">Kingston · JA</span>
+        <span class="tag gold">Open source</span>
+        <span class="tag">Runs on Lightning ⚡</span>
+      </div>
+      <h1>Orders in.<br><span class="sats">Sats out.<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M4 11 C60 3, 140 15, 296 7" stroke="#d94f1e" stroke-width="5" fill="none" stroke-linecap="round"/></svg></span></h1>
       <p class="lede">
-        Caribbean hustle runs on WhatsApp — cook shops, craft vendors, market
-        stalls. Hustle Link reads the order, prices it, and drops a Lightning
-        invoice in the chat. Sats land straight in your Flash wallet.
-        <strong>No app to learn. No middleman holding your money.</strong>
+        Yuh business already run pon WhatsApp — cook shop, craft stall, taxi run,
+        Sunday dinner. Hustle Link reads the order in the chat, prices it, and drops a
+        Lightning invoice right there. <b>Money reach your Flash wallet before the food done wrap.</b>
       </p>
       <div class="cta-row">
-        <a class="btn btn-gold" href="https://github.com/bobodread876/hustle-link">Get the code</a>
-        <a class="btn btn-ghost" href="#demo">See it run</a>
+        <a class="btn btn-grn" href="https://github.com/bobodread876/hustle-link">Get the code</a>
+        <a class="btn btn-paper" href="#receipt">See it run</a>
       </div>
-      <p class="sub-cta">Open source · MIT · Built on LNURL — works with any Lightning wallet</p>
+      <span class="hand-note">no new app fi learn — di chat is di shop ↓</span>
     </div>
 
-    <div class="phone" aria-label="WhatsApp conversation demo">
-      <div class="phone-top">
+    <div class="phone" role="img" aria-label="WhatsApp conversation: a customer orders two jerk chicken meals, receives a Lightning payment link, and pays">
+      <div class="wa-top">
         <div class="avatar">🍗</div>
         <div>
-          <div class="name">Miss Pauline's Cook Shop</div>
-          <div class="status">● online</div>
+          <div class="name">Miss Pauline Cook Shop</div>
+          <div class="sub">online</div>
         </div>
       </div>
       <div class="chat">
-        <div class="msg them">2 jerk chicken meal, deliver to Half Way Tree. Name Andre<span class="meta">11:42</span></div>
-        <div class="msg us">Order confirmed ✔<br>2x jerk chicken meal — <b>J$2,400</b> (≈24,608 sats)<br>Deliver to: Half Way Tree
-          <span class="inv">lnbc246080n1p4y0hpt…tap to pay ⚡</span>
-          <span class="meta">11:42</span>
+        <div class="msg in">2 jerk chicken meal, deliver to Half Way Tree. Name Andre <span class="time">11:42</span></div>
+        <div class="msg out">
+          Order set ✔ 2x jerk chicken meal · deliver Half Way Tree
+          <span class="pay-card">
+            <span class="amt">J$2,400 <small>(≈ 24,608 sats)</small></span><br>
+            <span class="lnaddr">lnbc246080n1p4y0hpt…</span>
+            <span class="paybtn">⚡ Pay with any Lightning wallet</span>
+          </span>
+          <span class="time">11:42 <span class="check">✓✓</span></span>
         </div>
-        <div class="msg us"><span class="paid">⚡ Paid — 24,608 sats received</span><br>Andre, food soon come 🇯🇲<span class="meta">11:44</span></div>
+        <div class="msg paid-note">⚡ PAID — 24,608 sats received</div>
+        <div class="msg out">Andre, food soon come 🇯🇲 <span class="time">11:44 <span class="check">✓✓</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Jerk chicken ⚡ Box food ⚡ Festival ⚡ Soup Saturday ⚡ Craft ⚡ Taxi run ⚡ Patty ⚡ Sky juice ⚡ Sunday dinner ⚡ Fresh fish ⚡ Roast yam ⚡</span>
+      <span>Jerk chicken ⚡ Box food ⚡ Festival ⚡ Soup Saturday ⚡ Craft ⚡ Taxi run ⚡ Patty ⚡ Sky juice ⚡ Sunday dinner ⚡ Fresh fish ⚡ Roast yam ⚡</span>
+    </div>
+  </div>
+
+  <section id="how" class="wrap">
+    <div class="sec-head">
+      <h2>How it work</h2>
+      <span class="sec-hand">— three step, done ✓</span>
+    </div>
+    <p class="sec-lede">Your customers already order in the chat. Hustle Link just closes the money loop.</p>
+    <div class="tickets">
+      <div class="ticket">
+        <div class="num">1</div>
+        <span class="quote">"3 box food, $800 each, drop off a Papine"</span>
+        <h3>Dem order like always</h3>
+        <p>Plain text, patois, shorthand — the agent reads the message and pulls out items, price, delivery spot, and who fi call.</p>
+      </div>
+      <div class="ticket">
+        <div class="num">2</div>
+        <span class="quote">J$2,400 → 24,608 sats ⚡</span>
+        <h3>Invoice drop inna di chat</h3>
+        <p>Total converts to sats at the live rate. The Lightning invoice lands right in the thread — payable from any wallet, any country.</p>
+      </div>
+      <div class="ticket">
+        <div class="num">3</div>
+        <span class="quote">ka-CHING — sats reach ✓</span>
+        <h3>You get paid. Same time.</h3>
+        <p>Sats settle straight to your Flash wallet with the order in the memo. No chargeback, no waiting pon cash, no bank needed.</p>
       </div>
     </div>
   </section>
 
-  <section id="how">
-    <span class="kicker">How it works</span>
-    <h2>From chat to sats in three steps</h2>
-    <p class="section-lede">Your customers already order in the chat. Hustle Link just closes the money loop.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="num">01</div>
-        <h3>Customer orders like always</h3>
-        <p>"3 box food, $800 each, drop off at Papine." Plain text, patois, shorthand — the AI agent reads it and structures the order.</p>
+  <section id="receipt" class="wrap">
+    <div class="sec-head">
+      <h2>Real order. Real invoice.</h2>
+      <span class="sec-hand">— printed from di live demo</span>
+    </div>
+    <div class="demo-grid">
+      <div class="receipt" aria-label="Receipt showing a real parsed order and Lightning invoice">
+        <div class="r-head">HUSTLE LINK</div>
+        <div class="r-sub">order desk · powered by Lightning</div>
+        <hr>
+        <div class="row"><span>ORDER</span><span>#98fd5a0e</span></div>
+        <div class="row"><span>VENDOR</span><span>cookshop@flashapp.me</span></div>
+        <hr>
+        <div class="row"><span>2x jerk chicken meal</span><span>2,400.00</span></div>
+        <div class="row"><span>DELIVER</span><span>Half Way Tree</span></div>
+        <div class="row"><span>BUYER</span><span>Andre · 876-555-1234</span></div>
+        <hr>
+        <div class="row big"><span>TOTAL JMD</span><span>$2,400</span></div>
+        <div class="row big"><span>TOTAL SATS</span><span>⚡ 24,608</span></div>
+        <hr>
+        <div class="ln">lnbc246080n1p4y0hptpp5ncvtfwwqs6kfmpypcwteggmvxfpgclkfxwmvsgp8l7v2t8csnseshp5lg2dp2w8957pyf6p38kufsyjxclwzc9kyg5ysp68er2fc4rpmpwq…</div>
+        <div class="qr-hint">— pay from any Lightning wallet —</div>
+        <div class="stamp">Paid ⚡</div>
       </div>
-      <div class="step">
-        <div class="num">02</div>
-        <h3>Invoice lands in the chat</h3>
-        <p>The total converts to sats at the live rate and a Lightning invoice appears in the thread — payable from any Lightning wallet, anywhere on Earth.</p>
-      </div>
-      <div class="step">
-        <div class="num">03</div>
-        <h3>You get paid. Instantly.</h3>
-        <p>Sats settle straight to your Flash wallet with the order in the memo. No chargebacks, no waiting on cash, no bank account needed.</p>
+      <div class="demo-copy">
+        <h3>This receipt isn't a mockup.</h3>
+        <p>That invoice was generated by the prototype against a live Flash lightning
+        address — one command, no API keys, no signup. Every Flash username already
+        is a Lightning address, so the money path needs <b>zero custody and zero credentials</b>.
+        The buyer pays the vendor. Full stop.</p>
+        <p>Run it yourself:</p>
+        <div class="cmd">$ hustle order --vendor <span class="g">yourname@flashapp.me</span> \
+    "2 jerk chicken meal, total $2400, name Andre"
+
+Order 98fd5a0e  [<span class="g">INVOICED</span>]   sats: <span class="g">24608</span>
+invoice: <span class="g">lnbc246080n1p4y0hpt…</span></div>
       </div>
     </div>
   </section>
 
-  <section id="why">
-    <span class="kicker">Why Hustle Link</span>
-    <h2>Built for the hustle, not the boardroom</h2>
-    <div class="features">
-      <div class="feature">
-        <div class="icon">🔓</div>
+  <section id="why" class="wrap">
+    <div class="sec-head">
+      <h2>Built for di hustle</h2>
+      <span class="sec-hand">— not di boardroom</span>
+    </div>
+    <div class="why">
+      <div class="why-item">
+        <span class="tick">✓</span>
         <div>
-          <h3>Zero custody, zero credentials</h3>
-          <p>Invoices are generated through your existing Flash lightning address. Nobody — including us — ever touches your money.</p>
+          <h3>Nobody holds your money</h3>
+          <p>Invoices pay straight to your own Flash wallet. No platform balance, no payout schedule, no freeze.</p>
         </div>
       </div>
-      <div class="feature">
-        <div class="icon">📱</div>
+      <div class="why-item">
+        <span class="tick">✓</span>
         <div>
-          <h3>No new app for vendors</h3>
-          <p>If you can run your business on WhatsApp, you can use Hustle Link. The chat is the point of sale.</p>
+          <h3>No new app fi learn</h3>
+          <p>If you can run your business on WhatsApp, you can use Hustle Link today. The chat is the point of sale.</p>
         </div>
       </div>
-      <div class="feature">
-        <div class="icon">🌍</div>
+      <div class="why-item">
+        <span class="tick">✓</span>
         <div>
-          <h3>Sell to the whole world</h3>
-          <p>Lightning invoices are payable from any wallet in any country. Diaspora customers can pay for Mummy's Sunday dinner from Brooklyn.</p>
+          <h3>Foreign can pay too</h3>
+          <p>Lightning works from any wallet in any country — family a Brooklyn can pay for Mummy's Sunday dinner in Kingston.</p>
         </div>
       </div>
-      <div class="feature">
-        <div class="icon">🧾</div>
+      <div class="why-item">
+        <span class="tick">✓</span>
         <div>
           <h3>Orders, not just payments</h3>
-          <p>Items, delivery spot, buyer name and number — structured from the message and attached to the payment memo. Close off the day with one command.</p>
+          <p>Items, delivery spot, name and number — structured from the message, attached to the payment memo. Close off the day with one command.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="demo">
-    <span class="kicker">Live demo</span>
-    <h2>Real message. Real invoice.</h2>
-    <p class="section-lede">This is actual output against a live Flash lightning address — a J$2,400 order becoming a payable Lightning invoice.</p>
-    <div class="demo">
-      <div class="demo-bar"><span></span><span></span><span></span></div>
-      <pre><span class="c">$</span> hustle order --vendor cookshop@flashapp.me \
-    <span class="t">"2 jerk chicken meal, total $2400, deliver to Half Way Tree, name Andre"</span>
-
-Order 98fd5a0e  [<span class="g">INVOICED</span>]
-  vendor:   cookshop@flashapp.me
-  item:     2x jerk chicken meal
-  total:    2400 JMD
-  sats:     <span class="g">24608</span>
-  deliver:  Half Way Tree
-  buyer:    Andre
-
-  invoice:
-  <span class="g">lnbc246080n1p4y0hptpp5ncvtfwwqs6kfmpypcwteggmvxfpgclkfxwmvsgp8l7v2t8csnses…</span></pre>
+  <div class="wrap">
+    <div class="sign">
+      <h2>Di chat is di shop.</h2>
+      <span class="hand">Lightning is di cash register ⚡</span>
+      <a class="btn btn-paper" href="https://github.com/bobodread876/hustle-link">Link up on GitHub</a>
     </div>
-  </section>
-
-  <div class="banner">
-    <h2>The chat is the storefront.<br>Lightning is the register.</h2>
-    <p>Open source prototype — run it, fork it, or wire it into your own agent.</p>
-    <a class="btn btn-gold" href="https://github.com/bobodread876/hustle-link">Star it on GitHub ⚡</a>
   </div>
 </main>
 
 <footer>
   <div class="wrap foot">
-    <div><span style="color:var(--gold)">⚡</span> Hustle Link — MIT licensed</div>
+    <div>⚡ <b>Hustle Link</b> — open source · MIT · built inna Jamaica</div>
     <div>
       <a href="https://github.com/bobodread876/hustle-link">GitHub</a> ·
       <a href="https://patoo.ai/ideas">Ideas pipeline</a> ·
