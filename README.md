@@ -71,10 +71,16 @@ npx tsx src/cli.ts rate JMD
 
 The heuristic parser exists so the CLI works standalone. In deployment, this
 runs as an agent skill inside [NanoClaw](https://github.com/qwibitai/nanoclaw):
-the vendor adds the agent to their WhatsApp business group, the LLM does the
-parsing (handling patois, voice notes via transcription, and back-and-forth
+the agent sits in the vendor's WhatsApp chats, the LLM does the parsing
+(handling patois, voice notes via transcription, and back-and-forth
 clarification), and this library handles the money path. See
 [`skill/SKILL.md`](skill/SKILL.md).
+
+**No Meta Cloud API needed** — the agent connects as a regular WhatsApp
+account via the WhatsApp Web protocol, and one agent number serves many
+vendors. [`DEPLOYMENT.md`](DEPLOYMENT.md) covers the transport trade-offs
+(Baileys vs Cloud API) and the three vendor onboarding shapes (existing
+customer group, private order-desk group, dedicated storefront number).
 
 ## Non-goals (for now)
 

@@ -11,6 +11,10 @@ pays the vendor's Flash wallet directly.
 
 ## Setup (once per group)
 
+A "group" here is one vendor context — either the vendor's existing customer
+group, a private vendor+agent order-desk group, or a 1:1 storefront chat.
+See [DEPLOYMENT.md](../DEPLOYMENT.md) for the onboarding shapes.
+
 The group's `CLAUDE.md` must contain:
 
 ```
