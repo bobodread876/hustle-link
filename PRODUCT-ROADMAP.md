@@ -47,6 +47,19 @@ gives them a clean day sheet for free, they stay for that even when
 Lightning volume is thin — and it's the data layer any future fee model
 needs.
 
+## 5b. Receipts + reconciliation (merged from Grip, patoo v-018)
+
+The Grip venture (WhatsApp AI assistant for Lightning merchants — payment
+confirmations, fiat/sats reconciliation, receipts) was merged into Hustle
+Link on 2026-07-07: same vendor, same channel, same wallet rails. Its scope
+lands here as the post-payment half of the loop, extending the day sheet:
+
+- Per-order receipt generation the vendor can forward to the customer
+  (order line, sats + JMD amounts, timestamp, payment proof)
+- Daily fiat/sats reconciliation against the vendor's Flash wallet history
+  (catches the "customer says paid, wallet says no" dispute before it ages)
+- Failed-payment troubleshooting prompts (expired invoice, routing failure)
+
 ## 6. QR codes for in-person sales
 
 A market-stall customer standing in front of the vendor shouldn't
