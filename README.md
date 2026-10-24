@@ -2,11 +2,11 @@
 
 **Turn WhatsApp orders into Lightning payments for Caribbean hustlers.**
 
-Caribbean informal commerce runs on WhatsApp — cook shops, craft vendors, and
+Caribbean informal commerce runs on WhatsApp. Cook shops, craft vendors, and
 market stalls take orders in chat and collect cash on delivery. Hustle Link
-bridges the gap: it reads a WhatsApp order message, structures it, converts
+reads a WhatsApp order message, structures it, converts
 the total to sats, and generates a Lightning invoice that pays **directly into
-the vendor's Flash wallet**. No app for the vendor to learn.
+the vendor's Flash wallet**. The vendor has no app to learn.
 
 Prototype for the venture assessed at [patoo.ai/ideas](https://patoo.ai/ideas).
 
@@ -23,9 +23,9 @@ Prototype for the venture assessed at [patoo.ai/ideas](https://patoo.ai/ideas).
 lnbc246080n1p4y0hpt...   ← buyer pays this; sats land in the vendor's Flash wallet
 ```
 
-The key design decision: **no custody, no API keys**. Invoices are generated
+Hustle Link holds no funds and uses no API keys. Invoices are generated
 through the vendor's existing lightning address (every Flash username has
-one), so the prototype never touches funds and needs zero credentials.
+one), so the prototype never touches funds and needs no credentials.
 
 ## Try it
 
@@ -47,7 +47,7 @@ npx tsx src/cli.ts rate JMD
 
 | Status     | Meaning                                                      |
 | ---------- | ------------------------------------------------------------ |
-| `received` | Parsed but no price stated — vendor quotes, then `quoteOrder` |
+| `received` | Parsed but no price stated; vendor quotes, then `quoteOrder` |
 | `invoiced` | Lightning invoice generated and sent to buyer                 |
 | `paid`     | Settlement confirmed (LUD-21 verify)                          |
 
@@ -59,7 +59,7 @@ npx tsx src/cli.ts rate JMD
   with the payment.
 - **Flash/IBEX does not return a LUD-21 `verify` URL**, so automated payment
   confirmation isn't possible from the outside yet. Options: (a) add LUD-21 to
-  Flash's LNURL responses — small backend change, big enabler; (b) vendor
+  Flash's LNURL responses (a small backend change with a large payoff); (b) vendor
   confirms manually from their Flash push notification; (c) poll the Flash
   GraphQL API with vendor auth (requires credentials, breaks the zero-custody
   model).
@@ -76,7 +76,7 @@ the agent sits in the vendor's WhatsApp chats, the LLM does the parsing
 clarification), and this library handles the money path. See
 [`skill/SKILL.md`](skill/SKILL.md).
 
-**No Meta Cloud API needed** — the agent connects as a regular WhatsApp
+The agent needs no Meta Cloud API: it connects as a regular WhatsApp
 account via the WhatsApp Web protocol, and one agent number serves many
 vendors. [`DEPLOYMENT.md`](DEPLOYMENT.md) covers the transport trade-offs
 (Baileys vs Cloud API) and the three vendor onboarding shapes (existing
@@ -84,6 +84,6 @@ customer group, private order-desk group, dedicated storefront number).
 
 ## Non-goals (for now)
 
-- Custody, escrow, or refunds — buyer pays vendor directly
-- Fiat settlement — vendors keep sats in Flash (cash-out is Flash's job)
-- Catalog/menu management — the message is the interface
+- Custody, escrow, or refunds (the buyer pays the vendor directly)
+- Fiat settlement (vendors keep sats in Flash; cash-out is Flash's job)
+- Catalog/menu management (the message is the interface)
